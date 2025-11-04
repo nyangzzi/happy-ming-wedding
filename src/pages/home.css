@@ -1,13 +1,17 @@
 .page--home {
-  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 10px;
-  padding: 24px;
-  overflow-y: auto;
+  gap: 20px;
+  padding: 10px;
   text-align: center;
   box-sizing: border-box;
+
+  /* 모바일 화면 대응 */
+  width: 100%;
+  max-width: 560px; /* 최대 너비를 설정하여 PC에서 모바일처럼 보이게 함 */
+  margin: 0 auto; /* PC 화면에서 중앙 정렬 */
+  overflow-y: auto; /* 내용이 길어지면 스크롤 */
 }
 .title { margin: 0 0 8px; color: #c27b7f; font-size: 2rem; }
 .sub { color: #555; margin-bottom: 24px; }
