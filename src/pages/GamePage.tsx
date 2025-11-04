@@ -1,9 +1,11 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import './game.css'
+import groomSu from '../assets/groom-su.png'
+import brideMing from '../assets/bride-ming.png'
 
-const BRIDE_EMOJI = '👰‍♀️'
-const GROOM_EMOJI = '🤵‍♂️'
+const BRIDE_IMAGE = brideMing
+const GROOM_IMAGE = groomSu
 const OBSTACLE_EMOJIS = ['💸', '💣', '💔', '🔥']
 const HEART_EMOJI = '❤️'
 const BASKET_EMOJI = '🧺'
@@ -12,6 +14,7 @@ const GAME_WIDTH = 375
 const GAME_HEIGHT = 600
 const GROOM_WIDTH = 50
 const EMOJI_SIZE = 30
+const BRIDE_EMOJI_SIZE = 50
 
 const START_DATE = new Date('2023-08-15')
 
@@ -105,7 +108,7 @@ export default function GamePage() {
           newEmoji.type = 'heart'
         } else if (rand < 0.35) {
           // 30% 확률로 신부 (0.05 ~ 0.35)
-          newEmoji.char = BRIDE_EMOJI
+          newEmoji.char = BRIDE_IMAGE
           newEmoji.type = 'bride'
         } else {
           // 나머지 확률로 장애물
@@ -124,8 +127,9 @@ export default function GamePage() {
         const updatedEmojis = currentEmojis.filter((emoji) => {
           const newY = emoji.y + emoji.speed
           // Collision detection
+          const currentEmojiSize = emoji.type === 'bride' ? BRIDE_EMOJI_SIZE : EMOJI_SIZE
           const groomRect = { x: groomXRef.current, y: GAME_HEIGHT - 50, width: GROOM_WIDTH, height: 30 }
-          const emojiRect = { x: emoji.x, y: newY, width: EMOJI_SIZE, height: EMOJI_SIZE }
+          const emojiRect = { x: emoji.x, y: newY, width: currentEmojiSize, height: currentEmojiSize }
 
           if (
             emojiRect.x < groomRect.x + groomRect.width &&
@@ -239,8 +243,14 @@ export default function GamePage() {
       case 'idle':
         return (
           <div className="game-intro">
-            <h2>신랑 밍을 도와 신부 밍을 찾아주세요!</h2>
-            <p>하늘에서 떨어지는 신부를 바구니로 받으면 점수를 얻어요.</p>
+            <p>오늘은 수X밍의 첫 재회 날!</p>
+            <h2>결혼식 입장까지 D-{targetScore}</h2>
+            <p>
+              신랑 수철 <img src={GROOM_IMAGE} alt="신랑" style={{ height: '1.5em', verticalAlign: 'bottom' }} />을 도와
+              신부 민경 <img src={BRIDE_IMAGE} alt="신부" style={{ height: '1.5em', verticalAlign: 'bottom' }} />을 찾아주세요
+            </p>
+            <p>하늘에서 떨어지는 신부 민경<img src={BRIDE_IMAGE} alt="신부" style={{ height: '1.5em', verticalAlign: 'bottom' }} />을
+             <br /> 바구니🧺로 받으면 점수를 얻어요.</p>
             <p>
               목표 점수: <strong>{targetScore}점</strong> (우리 D+{targetScore})
             </p>
@@ -305,17 +315,21 @@ export default function GamePage() {
             >
               <div className="groom" style={{ left: groomXRef.current, width: GROOM_WIDTH }}>
                 <span className="groom-basket">{BASKET_EMOJI}</span>
-                <span className="groom-char">{GROOM_EMOJI}</span>
+                <img src={GROOM_IMAGE} alt="신랑" className="groom-char" />
               </div>
-              {emojis.map((emoji) => (
-                <div
-                  key={emoji.id}
-                  className="emoji"
-                  style={{ left: emoji.x, top: emoji.y, fontSize: EMOJI_SIZE }}
-                >
-                  {emoji.char}
-                </div>
-              ))}
+              {emojis.map((emoji) => {
+                const isBride = emoji.type === 'bride'
+                const size = isBride ? BRIDE_EMOJI_SIZE : EMOJI_SIZE
+                return (
+                  <div key={emoji.id} className="emoji" style={{ left: emoji.x, top: emoji.y, width: size, height: size }}>
+                    {isBride ? (
+                      <img src={emoji.char} alt="신부" style={{ width: '100%', height: '100%' }} />
+                    ) : (
+                      <span style={{ fontSize: size }}>{emoji.char}</span>
+                    )}
+                  </div>
+                )
+              })}
               {floatingTexts.map((ft) => (
                 <div
                   key={ft.id}

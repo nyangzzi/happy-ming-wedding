@@ -1,7 +1,6 @@
 .page--game {
   text-align: center;
   padding: 20px;
-  overflow: hidden;
 }
 
 .game-intro {
@@ -77,9 +76,10 @@
   font-size: 40px;
 }
 
-.groom-char {
-  font-size: 30px;
+.groom-char {  
   margin-top: -15px;
+  width: 50px;
+  height: 50px;
 }
 
 .emoji {
