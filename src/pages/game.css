@@ -187,11 +187,12 @@
 }
 
 .game-over.lost {
-  background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+  background: linear-gradient(135deg, #6c757d, #343a40);
+  color: #fff;
 }
 
 .game-over.lost h2 {
-  color: #868e96;
+  color: #f8f9fa;
 }
 
 .animation-character {

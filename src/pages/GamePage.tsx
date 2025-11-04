@@ -4,6 +4,7 @@ import './game.css'
 import groomSu from '../assets/groom-su.png'
 import brideMing from '../assets/bride-ming.png'
 import stickerSuMing from '../assets/sticker-su-ming.png'
+import cryingSu from '../assets/crying-su.png'
 
 import { QuestionMarkCircledIcon } from '@radix-ui/react-icons'
 
@@ -305,7 +306,9 @@ export default function GamePage() {
           <div className="game-over lost">
             <h2>결혼 실패...</h2>
             <p>최종 점수: {score}점</p>
-            <div className="animation-character crying">😭🤵‍♂️</div>
+            <div className="animation-character crying">
+                <img src={cryingSu} alt="울지마수철" style={{ height: '3em', }} />
+            </div>
             <p>민경을 놓치다니... 다시 한번 기회를 주세요!</p>
             <button onClick={startGame} className="game-button">
               다시 도전
