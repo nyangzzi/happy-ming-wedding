@@ -1,9 +1,9 @@
-import { createBrowserRouter } from 'react-router-dom'
+import { createHashRouter } from 'react-router-dom'
 
 import GamePage from '../pages/GamePage'
 import HomePage from '../pages/HomePage'
 
-export const router = createBrowserRouter([
+export const router = createHashRouter([
   { path: '/', element: <HomePage /> },
   { path: '/game', element: <GamePage /> },
 ])
