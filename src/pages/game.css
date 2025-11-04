@@ -12,10 +12,65 @@
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
+.game-rules {
+  position: relative;
+  display: inline-block;
+  cursor: help;
+  margin: 10px 0;
+  color: #495057;
+  font-weight: bold;
+}
+
+.game-rules > span {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.game-rules-tooltip {
+  visibility: hidden;
+  width: 280px;
+  background-color: rgba(255, 255, 255, 0.9);
+  color: #333;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  border-radius: 6px;
+  padding: 15px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); /* 그림자 추가 */
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;  
+  margin-left: -140px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.game-rules:hover .game-rules-tooltip {
+  visibility: visible;
+  opacity: 1;
+}
+
+.game-rules-tooltip img, .game-rules-tooltip span { vertical-align: middle; height: 1.5em; margin-right: 8px; }
+.game-rules-tooltip > * {
+  margin: 0;
+}
+.game-rules-tooltip .tooltip-title {
+  font-weight: bold;
+  color: #d6336c;
+}
+.game-rules-tooltip .tooltip-description {
+ font-weight: normal;
+}
+.game-rules-tooltip .tooltip-item {
+  font-weight: normal;
+}
+
 .game-intro h2 {
   color: #d6336c;
 }
-
 .game-button {
   background-color: #ff87ab;
   color: white;

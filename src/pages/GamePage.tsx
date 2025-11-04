@@ -3,6 +3,9 @@ import { useNavigate } from 'react-router-dom'
 import './game.css'
 import groomSu from '../assets/groom-su.png'
 import brideMing from '../assets/bride-ming.png'
+import stickerSuMing from '../assets/sticker-su-ming.png'
+
+import { QuestionMarkCircledIcon } from '@radix-ui/react-icons'
 
 const BRIDE_IMAGE = brideMing
 const GROOM_IMAGE = groomSu
@@ -143,7 +146,7 @@ export default function GamePage() {
             }
             lastCollisionTimeRef.current = timestamp
             if (emoji.type === 'bride') {
-              const points = Math.floor(Math.random() * 10) + 1
+              const points = (Math.floor(Math.random() * 10) + 1) * 5
               scoreDelta += points
               newFloatingTexts.push({
                 id: emoji.id,
@@ -246,21 +249,39 @@ export default function GamePage() {
             <p>오늘은 수X밍의 첫 재회 날!</p>
             <h2>결혼식 입장까지 D-{targetScore}</h2>
             <p>
-              신랑 수철 <img src={GROOM_IMAGE} alt="신랑" style={{ height: '1.5em', verticalAlign: 'bottom' }} />을 도와
-              신부 민경 <img src={BRIDE_IMAGE} alt="신부" style={{ height: '1.5em', verticalAlign: 'bottom' }} />을 찾아주세요
+              신부 민경 <img src={BRIDE_IMAGE} alt="신부" style={{ height: '1.5em', verticalAlign: 'bottom' }} />과 함께 결혼식장에 갈 수 있도록
+              <br />
+              신랑 수철 <img src={GROOM_IMAGE} alt="신랑" style={{ height: '1.5em', verticalAlign: 'bottom' }} />을 도와주세요
             </p>
-            <p>하늘에서 떨어지는 신부 민경<img src={BRIDE_IMAGE} alt="신부" style={{ height: '1.5em', verticalAlign: 'bottom' }} />을
-             <br /> 바구니🧺로 받으면 점수를 얻어요.</p>
             <p>
-              목표 점수: <strong>{targetScore}점</strong> (우리 D+{targetScore})
+                <img src={stickerSuMing} alt="신랑-신부" style={{ height: '20em', }} />
             </p>
-            <p>다른 이모지를 받으면 목숨이 하나 줄어들어요. (총 3개)</p>
-            <button onClick={startGame} className="game-button">
-              게임 시작 🎮
-            </button>
-            <button onClick={() => nav('/')} className="game-button secondary">
-              홈으로
-            </button>
+
+             <div className="game-rules">
+                <span>게임 방법 <QuestionMarkCircledIcon /></span>
+                <div className="game-rules-tooltip">
+                  <h4 className="tooltip-title">게임 방법</h4>
+                  <p className="tooltip-description">하늘에서 떨어지는 신부, 천사 민경 <img src={BRIDE_IMAGE} alt="신부" style={{ height: '1.5em', verticalAlign: 'bottom' }} />을
+                      <br /> 바구니🧺로 받으면 점수를 얻어요.
+                      <br /> 획득한 점수만큼 결혼 날짜가 가까워져요!
+                      </p>
+                <br /> 
+                  <h4 className="tooltip-title">점수 획득 방법</h4>
+                  <p className="tooltip-item"><img src={BRIDE_IMAGE} alt="신부" />: 5~50점 랜덤 획득</p>
+                  <p className="tooltip-item"><span>{HEART_EMOJI}</span>: 목숨 +1</p>
+                  <p className="tooltip-item"><span>{OBSTACLE_EMOJIS.join(', ')}</span>: 목숨 -1</p>
+                </div>
+              </div>
+            <div>
+             
+              <p></p>
+              <button onClick={startGame} className="game-button">
+                게임 시작
+              </button>
+              <button onClick={() => nav('/')} className="game-button secondary">
+                홈으로
+              </button>
+            </div>
           </div>
         )
       case 'won':
@@ -274,8 +295,8 @@ export default function GamePage() {
             <button onClick={startGame} className="game-button">
               다시 도전
             </button>
-            <button onClick={() => nav('/')} className="game-button secondary">
-              홈으로
+            <button onClick={resetGame} className="game-button secondary">
+              처음으로
             </button>
           </div>
         )
@@ -285,12 +306,12 @@ export default function GamePage() {
             <h2>결혼 실패...</h2>
             <p>최종 점수: {score}점</p>
             <div className="animation-character crying">😭🤵‍♂️</div>
-            <p>신부를 놓치다니... 다시 한번 기회를 주세요!</p>
+            <p>민경을 놓치다니... 다시 한번 기회를 주세요!</p>
             <button onClick={startGame} className="game-button">
-              재시도
+              다시 도전
             </button>
-            <button onClick={() => nav('/')} className="game-button secondary">
-              홈으로
+            <button onClick={resetGame} className="game-button secondary">
+              처음으로
             </button>
           </div>
         )
