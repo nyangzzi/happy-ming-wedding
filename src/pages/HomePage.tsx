@@ -26,35 +26,24 @@ export default function HomePage() {
         <span>.</span>
       </div>
    
-      <p style={{textAlign: 'center' , display:'flex', 
-        justifyContent: 'center', alignItems: 'center',
-        flexDirection: 'column', gap: '10px'}}>
+      <div className="flex-col-center">
         {'<지금 시작합니다>'}
-      <img src={posterImg} alt="환연포스터" style={{ height: '50em', verticalAlign: 'bottom' }} />
-      </p>
-      <p/>
+        <img src={posterImg} alt="환연포스터" style={{ height: '50em', verticalAlign: 'bottom' }} />
+      </div>
 
       <p style={{textAlign: 'center' ,}} >환승연애 시즌 ∞ !<br/> 새로운 하우스에 입주가 시작되었습니다</p>
       <img src={house} alt="환연하우스" style={{ height: '20em', verticalAlign: 'bottom' }} />
 
-      <p/>
-
-
       <p>첫 번째 입주자, 박민경</p>
       <img src={girlMing} alt="박밍공" style={{ height: '20em', verticalAlign: 'bottom' }} />
 
-<p/>
       <p>두 번째 입주자, 임수철</p>
        <img src={boySu} alt="임수철" style={{ height: '20em', verticalAlign: 'bottom' }} />
       
-
-      <p/>
       <p>~~어쩌구 저쩌구 게임도 있답니다~~</p>
-      <p>
       <div className="cta">
         <button onClick={() => nav('/game')}>게임 시작</button>
       </div>
-      </p>
     </div>
   )
 }

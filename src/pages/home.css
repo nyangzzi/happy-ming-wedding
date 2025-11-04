@@ -6,6 +6,7 @@
   gap: 10px;
   padding: 24px;
   overflow-y: auto;
+  text-align: center;
   box-sizing: border-box;
 }
 .title { margin: 0 0 8px; color: #c27b7f; font-size: 2rem; }
@@ -21,5 +22,13 @@
   flex-direction: column;
   font-size: 1.5rem;
   line-height: 0.5;
+}
+.flex-col-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 10px;
 }
 .cta button:hover { background:#b0676c; }

@@ -21,6 +21,7 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  min-height: 100vh; /* 최소 높이를 뷰포트 높이로 설정 */
 }
 
 /* 페이지 기본 중앙 정렬 */
