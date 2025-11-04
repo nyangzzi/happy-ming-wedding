@@ -5,6 +5,7 @@ import './game.css'
 const BRIDE_EMOJI = '👰‍♀️'
 const GROOM_EMOJI = '🤵‍♂️'
 const OBSTACLE_EMOJIS = ['💸', '💣', '💔', '🔥']
+const HEART_EMOJI = '❤️'
 const BASKET_EMOJI = '🧺'
 
 const GAME_WIDTH = 375
@@ -20,7 +21,7 @@ interface Emoji {
   x: number
   y: number
   speed: number
-  type: 'bride' | 'obstacle'
+  type: 'bride' | 'obstacle' | 'heart'
 }
 
 interface FloatingText {
@@ -35,7 +36,7 @@ export default function GamePage() {
   const nav = useNavigate()
   const [gameState, setGameState] = useState<'idle' | 'playing' | 'won' | 'lost'>('idle')
   const [score, setScore] = useState(0)
-  const [lives, setLives] = useState(3)
+  const [lives, setLives] = useState(5)
   const [emojis, setEmojis] = useState<Emoji[]>([])
   const [floatingTexts, setFloatingTexts] = useState<FloatingText[]>([])
 
@@ -56,7 +57,7 @@ export default function GamePage() {
 
   const startGame = () => {
     setScore(0)
-    setLives(3)
+    setLives(5)
     setEmojis([])
     setFloatingTexts([])
     setGameState('playing')
@@ -92,12 +93,24 @@ export default function GamePage() {
           id: Date.now(),
           x: Math.random() * (GAME_WIDTH - EMOJI_SIZE),
           y: -EMOJI_SIZE,
-          speed: 1 + Math.random() * 1.5, // 속도를 약간 늦춥니다.
-          char: Math.random() < 0.3 ? BRIDE_EMOJI : OBSTACLE_EMOJIS[Math.floor(Math.random() * OBSTACLE_EMOJIS.length)],
-          type: 'obstacle',
+          speed: 1 + Math.random() * 1.5,
+          char: '',
+          type: 'obstacle', // 기본값
         }
-        if (newEmoji.char === BRIDE_EMOJI) {
+
+        const rand = Math.random()
+        if (rand < 0.05) {
+          // 5% 확률로 하트
+          newEmoji.char = HEART_EMOJI
+          newEmoji.type = 'heart'
+        } else if (rand < 0.35) {
+          // 30% 확률로 신부 (0.05 ~ 0.35)
+          newEmoji.char = BRIDE_EMOJI
           newEmoji.type = 'bride'
+        } else {
+          // 나머지 확률로 장애물
+          newEmoji.char = OBSTACLE_EMOJIS[Math.floor(Math.random() * OBSTACLE_EMOJIS.length)]
+          newEmoji.type = 'obstacle'
         }
         setEmojis((prev) => [...prev, newEmoji])
       }
@@ -135,6 +148,15 @@ export default function GamePage() {
                 y: GAME_HEIGHT - 70,
                 createdAt: timestamp,
               })
+            } else if (emoji.type === 'heart') {
+              livesDelta += 1
+              newFloatingTexts.push({
+                id: emoji.id,
+                text: '+❤️',
+                x: groomXRef.current + GROOM_WIDTH / 2,
+                y: GAME_HEIGHT - 70,
+                createdAt: timestamp,
+              })
             } else {
               livesDelta -= 1
               newFloatingTexts.push({
@@ -157,7 +179,7 @@ export default function GamePage() {
           setScore((s) => s + scoreDelta)
         }
         if (livesDelta !== 0) {
-          setLives((l) => Math.max(0, l + livesDelta))
+          setLives((l) => Math.min(5, Math.max(0, l + livesDelta)))
         }
         if (newFloatingTexts.length > 0) {
           setFloatingTexts((ft) => [...ft, ...newFloatingTexts])
@@ -268,7 +290,7 @@ export default function GamePage() {
             <div className="game-stats">
               <span>
                 목숨: {'❤️'.repeat(lives)}
-                {'🤍'.repeat(Math.max(0, 3 - lives))}
+                {'🤍'.repeat(Math.max(0, 5 - lives))}
               </span>
               <span>
                 결혼까지 D-{Math.max(0, targetScore - score)}
