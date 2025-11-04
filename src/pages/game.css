@@ -1,0 +1,236 @@
+.page--game {
+  text-align: center;
+  padding: 20px;
+}
+
+.game-intro {
+  max-width: 375px;
+  margin: 0 auto;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: 15px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.game-rules {
+  position: relative;
+  display: inline-block;
+  cursor: help;
+  margin: 10px 0;
+  color: #495057;
+  font-weight: bold;
+}
+
+.game-rules > span {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.game-rules-tooltip {
+  visibility: hidden;
+  width: 280px;
+  background-color: rgba(255, 255, 255, 0.9);
+  color: #333;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  border-radius: 6px;
+  padding: 15px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); /* 그림자 추가 */
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;  
+  margin-left: -140px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.game-rules:hover .game-rules-tooltip {
+  visibility: visible;
+  opacity: 1;
+}
+
+.game-rules-tooltip img, .game-rules-tooltip span { vertical-align: middle; height: 1.5em; margin-right: 8px; }
+.game-rules-tooltip > * {
+  margin: 0;
+}
+.game-rules-tooltip .tooltip-title {
+  font-weight: bold;
+  color: #d6336c;
+}
+.game-rules-tooltip .tooltip-description {
+ font-weight: normal;
+}
+.game-rules-tooltip .tooltip-item {
+  font-weight: normal;
+}
+
+.game-intro h2 {
+  color: #d6336c;
+}
+.game-button {
+  background-color: #ff87ab;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 25px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin: 10px 5px;
+  font-family: 'Gowun Dodum', sans-serif;
+}
+
+.game-button:hover {
+  background-color: #f76795;
+}
+
+.game-button.secondary {
+  background-color: #f1f3f5;
+  color: #495057;
+}
+
+.game-button.secondary:hover {
+  background-color: #e9ecef;
+}
+
+.game-stats {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 375px;
+  margin: 0 auto 10px;
+  font-size: 18px;
+  font-weight: bold;
+  color: #495057;
+}
+
+.game-area {
+  position: relative;
+  background: #ffffff;
+  border: 2px solid #ffe0e0;
+  border-radius: 10px;
+  overflow: hidden;
+  margin: 0 auto;
+  cursor: none;
+}
+
+.groom {
+  position: absolute;
+  bottom: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.groom-basket {
+  font-size: 40px;
+}
+
+.groom-char {  
+  margin-top: -15px;
+  width: 50px;
+  height: 50px;
+}
+
+.emoji {
+  position: absolute;
+}
+
+.floating-text {
+  position: absolute;
+  font-size: 20px;
+  font-weight: bold;
+  color: #e64980;
+  animation: float-up 1s ease-out forwards;
+  pointer-events: none;
+  text-shadow: 1px 1px 2px white;
+  transform: translateX(-50%);
+}
+
+@keyframes float-up {
+  from {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+  to {
+    opacity: 0;
+    transform: translate(-50%, -50px);
+  }
+}
+
+.game-over {
+  padding: 40px 20px;
+  border-radius: 15px;
+  background: rgba(255, 255, 255, 0.8);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  max-width: 375px;
+  margin: 0 auto;
+}
+
+.game-over h2 {
+  font-size: 2.5em;
+  margin-bottom: 10px;
+}
+
+.game-over.won {
+  background: linear-gradient(135deg, #fff1f5, #ffe4e9);
+}
+
+.game-over.won h2 {
+  color: #e64980;
+  animation: bounce 0.8s ease-in-out;
+}
+
+.game-over.lost {
+  background: linear-gradient(135deg, #6c757d, #343a40);
+  color: #fff;
+}
+
+.game-over.lost h2 {
+  color: #f8f9fa;
+}
+
+.animation-character {
+  font-size: 50px;
+  margin: 20px 0;
+}
+
+.crying {
+  animation: shake 0.5s infinite;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px) rotate(-5deg); }
+  75% { transform: translateX(5px) rotate(5deg); }
+}
+
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+  40% { transform: translateY(-30px); }
+  60% { transform: translateY(-15px); }
+}
+
+/* Confetti animation for win state */
+.confetti {
+  /* This would typically be a more complex animation or a library like canvas-confetti */
+  /* For simplicity, we'll just add a placeholder */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y="50" font-size="20">🎉</text></svg>'), url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y="50" font-size="20">🎊</text></svg>');
+  background-repeat: repeat;
+  animation: fall 3s linear infinite;
+}
+
+@keyframes fall {
+  to { background-position: 0 300px; }
+}
