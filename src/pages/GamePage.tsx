@@ -36,13 +36,14 @@ export default function GamePage() {
   const [gameState, setGameState] = useState<'idle' | 'playing' | 'won' | 'lost'>('idle')
   const [score, setScore] = useState(0)
   const [lives, setLives] = useState(3)
-  const [groomX, setGroomX] = useState(GAME_WIDTH / 2 - GROOM_WIDTH / 2)
   const [emojis, setEmojis] = useState<Emoji[]>([])
   const [floatingTexts, setFloatingTexts] = useState<FloatingText[]>([])
 
+  const groomXRef = useRef(GAME_WIDTH / 2 - GROOM_WIDTH / 2)
   const gameAreaRef = useRef<HTMLDivElement>(null)
   const requestRef = useRef<number | null>(null)
   const lastEmojiTimeRef = useRef(0)
+  const lastCollisionTimeRef = useRef(0) // 충돌 시간 기록을 위한 ref
 
   const getTargetScore = () => {
     const today = new Date()
@@ -70,20 +71,20 @@ export default function GamePage() {
     if (gameState !== 'playing' || !gameAreaRef.current) return
     const rect = gameAreaRef.current.getBoundingClientRect()
     const newX = e.clientX - rect.left - GROOM_WIDTH / 2
-    setGroomX(Math.max(0, Math.min(newX, GAME_WIDTH - GROOM_WIDTH)))
+    groomXRef.current = Math.max(0, Math.min(newX, GAME_WIDTH - GROOM_WIDTH))
+    gameAreaRef.current.querySelector('.groom')!.setAttribute('style', `left: ${groomXRef.current}px; width: ${GROOM_WIDTH}px`)
   }
 
   const handleTouchMove = (e: React.TouchEvent<HTMLDivElement>) => {
     if (gameState !== 'playing' || !gameAreaRef.current) return
     const rect = gameAreaRef.current.getBoundingClientRect()
     const newX = e.touches[0].clientX - rect.left - GROOM_WIDTH / 2
-    setGroomX(Math.max(0, Math.min(newX, GAME_WIDTH - GROOM_WIDTH)))
+    groomXRef.current = Math.max(0, Math.min(newX, GAME_WIDTH - GROOM_WIDTH))
+    gameAreaRef.current.querySelector('.groom')!.setAttribute('style', `left: ${groomXRef.current}px; width: ${GROOM_WIDTH}px`)
   }
 
-  const gameLoop = useCallback(
-    (timestamp: number) => {
-      if (gameState !== 'playing') return
-
+  useEffect(() => {
+    const gameLoop = (timestamp: number) => {
       // 1. Create new emojis
       if (timestamp - lastEmojiTimeRef.current > 500) {
         lastEmojiTimeRef.current = timestamp
@@ -110,7 +111,7 @@ export default function GamePage() {
         const updatedEmojis = currentEmojis.filter((emoji) => {
           const newY = emoji.y + emoji.speed
           // Collision detection
-          const groomRect = { x: groomX, y: GAME_HEIGHT - 50, width: GROOM_WIDTH, height: 30 }
+          const groomRect = { x: groomXRef.current, y: GAME_HEIGHT - 50, width: GROOM_WIDTH, height: 30 }
           const emojiRect = { x: emoji.x, y: newY, width: EMOJI_SIZE, height: EMOJI_SIZE }
 
           if (
@@ -119,13 +120,18 @@ export default function GamePage() {
             emojiRect.y < groomRect.y + groomRect.height &&
             emojiRect.y + emojiRect.height > groomRect.y
           ) {
+            // 충돌 후 200ms 동안은 새로운 충돌을 무시 (무적 시간)
+            if (timestamp - lastCollisionTimeRef.current < 200) {
+              return false // 충돌 처리 없이 이모지 제거
+            }
+            lastCollisionTimeRef.current = timestamp
             if (emoji.type === 'bride') {
               const points = Math.floor(Math.random() * 10) + 1
               scoreDelta += points
               newFloatingTexts.push({
                 id: emoji.id,
                 text: `+${points}`,
-                x: groomX + GROOM_WIDTH / 2,
+                x: groomXRef.current + GROOM_WIDTH / 2,
                 y: GAME_HEIGHT - 70,
                 createdAt: timestamp,
               })
@@ -134,7 +140,7 @@ export default function GamePage() {
               newFloatingTexts.push({
                 id: emoji.id,
                 text: '💥',
-                x: groomX + GROOM_WIDTH / 2,
+                x: groomXRef.current + GROOM_WIDTH / 2,
                 y: GAME_HEIGHT - 70,
                 createdAt: timestamp,
               })
@@ -164,23 +170,19 @@ export default function GamePage() {
         return prev.filter((ft) => timestamp - ft.createdAt < 1000)
       })
 
-      if (gameState === 'playing') {
-        requestRef.current = requestAnimationFrame(gameLoop)
-      }
-    },
-    [gameState, groomX, targetScore],
-  )
+      requestRef.current = requestAnimationFrame(gameLoop)
+    }
 
-  useEffect(() => {
     if (gameState === 'playing') {
       requestRef.current = requestAnimationFrame(gameLoop)
     }
     return () => {
       if (requestRef.current) {
         cancelAnimationFrame(requestRef.current)
+        requestRef.current = null
       }
     }
-  }, [gameState, gameLoop])
+  }, [gameState])
 
   // Check for win/loss conditions whenever score or lives change
   useEffect(() => {
@@ -196,9 +198,11 @@ export default function GamePage() {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (gameState !== 'playing') return
       if (e.key === 'ArrowLeft') {
-        setGroomX((prevX) => Math.max(0, prevX - 20))
+        groomXRef.current = Math.max(0, groomXRef.current - 30)
+        gameAreaRef.current?.querySelector('.groom')!.setAttribute('style', `left: ${groomXRef.current}px; width: ${GROOM_WIDTH}px`)
       } else if (e.key === 'ArrowRight') {
-        setGroomX((prevX) => Math.min(GAME_WIDTH - GROOM_WIDTH, prevX + 20))
+        groomXRef.current = Math.min(GAME_WIDTH - GROOM_WIDTH, groomXRef.current + 30)
+        gameAreaRef.current?.querySelector('.groom')!.setAttribute('style', `left: ${groomXRef.current}px; width: ${GROOM_WIDTH}px`)
       }
     }
 
@@ -277,7 +281,7 @@ export default function GamePage() {
               onTouchMove={handleTouchMove}
               style={{ width: GAME_WIDTH, height: GAME_HEIGHT }}
             >
-              <div className="groom" style={{ left: groomX, width: GROOM_WIDTH }}>
+              <div className="groom" style={{ left: groomXRef.current, width: GROOM_WIDTH }}>
                 <span className="groom-basket">{BASKET_EMOJI}</span>
                 <span className="groom-char">{GROOM_EMOJI}</span>
               </div>
