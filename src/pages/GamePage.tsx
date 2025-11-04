@@ -5,8 +5,11 @@ import groomSu from '../assets/groom-su.png'
 import brideMing from '../assets/bride-ming.png'
 import stickerSuMing from '../assets/sticker-su-ming.png'
 import cryingSu from '../assets/crying-su.png'
+import happyWedding from '../assets/happy-wedding.png'
 
 import { QuestionMarkCircledIcon } from '@radix-ui/react-icons'
+import useWindowSize from "react-use/lib/useWindowSize";
+import Confetti from "react-confetti";
 
 const BRIDE_IMAGE = brideMing
 const GROOM_IMAGE = groomSu
@@ -52,6 +55,8 @@ export default function GamePage() {
   const requestRef = useRef<number | null>(null)
   const lastEmojiTimeRef = useRef(0)
   const lastCollisionTimeRef = useRef(0) // 충돌 시간 기록을 위한 ref
+
+  const { width, height } = useWindowSize();
 
   const getTargetScore = () => {
     const today = new Date()
@@ -288,13 +293,14 @@ export default function GamePage() {
       case 'won':
         return (
           <div className="game-over won">
-            <div className="confetti"></div>
+             <Confetti width={width} height={height} />
             <h2>결혼 성공!</h2>
-            <p>최종 점수: {score}점</p>
-            <div className="animation-character">🎉🤵‍♂️👰‍♀️🎉</div>
-            <p>두 사람은 행복하게 살았답니다!</p>
+            <div className="animation-character">
+                <img src={happyWedding} alt="꺄축하해" style={{ height: '5em', }} />
+            </div>
+            <p>축하해주신 모든 분들께 감사드립니다. <br /> 덕분에 행복하게 잘 살겠습니다!</p>
             <button onClick={startGame} className="game-button">
-              다시 도전
+              한번 더
             </button>
             <button onClick={resetGame} className="game-button secondary">
               처음으로
@@ -304,12 +310,13 @@ export default function GamePage() {
       case 'lost':
         return (
           <div className="game-over lost">
-            <h2>결혼 실패...</h2>
+            <p>{Math.max(0, targetScore - score)}일 남기고</p>
+            <h2>결혼 실패</h2>
             <p>최종 점수: {score}점</p>
             <div className="animation-character crying">
                 <img src={cryingSu} alt="울지마수철" style={{ height: '3em', }} />
             </div>
-            <p>민경을 놓치다니... 다시 한번 기회를 주세요!</p>
+            <p>민경을 놓치다니 <br/> 다시 한번만 기회를 주세요!!</p>
             <button onClick={startGame} className="game-button">
               다시 도전
             </button>
