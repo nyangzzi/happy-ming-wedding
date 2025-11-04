@@ -379,5 +379,5 @@ export default function GamePage() {
     }
   }
 
-  return <div className="page page--center page--game">{renderGameState()}</div>
+  return <div className="page page--game-wrapper">{renderGameState()}</div>
 }
