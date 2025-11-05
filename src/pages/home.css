@@ -2,24 +2,81 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 20px;
+  gap: 60px;
   padding: 10px;
   text-align: center;
   box-sizing: border-box;
 
   /* 모바일 화면 대응 */
   width: 100%;
-  max-width: 560px; /* 최대 너비를 설정하여 PC에서 모바일처럼 보이게 함 */
-  margin: 0 auto; /* PC 화면에서 중앙 정렬 */
-  overflow-y: auto; /* 내용이 길어지면 스크롤 */
+  max-width: 560px;
+  /* 최대 너비를 설정하여 PC에서 모바일처럼 보이게 함 */
+  margin: 0 auto;
+  /* PC 화면에서 중앙 정렬 */
+  overflow-y: auto;
+  /* 내용이 길어지면 스크롤 */
 }
-.title { margin: 0 0 8px; color: #c27b7f; font-size: 2rem; }
-.sub { color: #555; margin-bottom: 24px; }
+
+.page--home img {
+  width: 100%;
+  height: auto;
+}
+
+.title {
+  margin: 0 0 8px;
+  color: #c27b7f;
+  font-size: 2rem;
+}
+
+.sub {
+  color: #555;
+  margin-bottom: 24px;
+}
+
+/* 게임 시작 버튼 스타일 */
 .cta button {
-  padding: 12px 24px; border: 0; border-radius: 12px;
-  background:#c27b7f; color:#fff; font-size:1rem; cursor:pointer;
+  padding: 20px 40px;
+  border: none;
+  border-radius: 30px;
+  background: #000;
+  color: #fff;
+  font-size: 1.5rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out;
 }
-.cta button:hover { background:#b0676c; }
+
+/* 버튼 호버 시 살짝 커지는 효과 */
+.cta button:hover {
+  transform: scale(1.1);
+}
+
+/* 게임 시작 버튼 툴팁 */
+.cta-tooltip {
+  background-color: #ff87ab;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 16px;
+  font-size: 0.9rem;
+  margin-bottom: 10px;
+  position: relative;
+  animation: pulse-scale 2s infinite;
+  /* 툴팁에 애니메이션 적용 */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* 툴팁 말풍선 꼬리 */
+.cta-tooltip::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -7px;
+  border-width: 7px;
+  border-style: solid;
+  border-color: #ff87ab transparent transparent transparent;
+}
+
 
 .vertical-dots {
   display: flex;
@@ -27,6 +84,7 @@
   font-size: 1.5rem;
   line-height: 0.5;
 }
+
 .flex-col-center {
   display: flex;
   flex-direction: column;
@@ -35,4 +93,28 @@
   text-align: center;
   gap: 10px;
 }
-.cta button:hover { background:#b0676c; }
+
+/* .page--home의 모든 직계 div 자식에 flex-col-center 스타일 적용 */
+.page--home>div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 20px;
+}
+
+/* 버튼을 위한 귀여운 애니메이션 */
+@keyframes pulse-scale {
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.05);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}

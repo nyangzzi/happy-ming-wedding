@@ -6,6 +6,15 @@ import brideMing from '../assets/bride-ming.png'
 import stickerSuMing from '../assets/sticker-su-ming.png'
 import cryingSu from '../assets/crying-su.png'
 import happyWedding from '../assets/happy-wedding.png'
+import gameIcon1 from '../assets/game/game-icon-1.png'
+import gameIcon2 from '../assets/game/game-icon-2.png'
+import gameIcon3 from '../assets/game/game-icon-3.png'
+import gameIcon4 from '../assets/game/game-icon-4.png'
+import gameIcon5 from '../assets/game/game-icon-5.png'
+//import gameIcon6 from '../assets/game/game-icon-6.png'
+import gameIcon7 from '../assets/game/game-icon-7.png'
+import gameIcon8 from '../assets/game/game-icon-8.png'
+import gameIcon9 from '../assets/game/game-icon-9.png'
 
 import { QuestionMarkCircledIcon } from '@radix-ui/react-icons'
 import useWindowSize from "react-use/lib/useWindowSize";
@@ -13,9 +22,11 @@ import Confetti from "react-confetti";
 
 const BRIDE_IMAGE = brideMing
 const GROOM_IMAGE = groomSu
-const OBSTACLE_EMOJIS = ['💸', '💣', '💔', '🔥']
-const HEART_EMOJI = '❤️'
-const BASKET_EMOJI = '🧺'
+const OBSTACLE_EMOJIS = [gameIcon1, gameIcon3, gameIcon4, gameIcon5]
+const HEART_EMOJI = gameIcon2
+const LOST_HEART_EMOJI = gameIcon7
+const BOMB_EMOJI = gameIcon8
+const BASKET_EMOJI = gameIcon9
 
 const GAME_WIDTH = 375
 const GAME_HEIGHT = 600
@@ -23,7 +34,7 @@ const GROOM_WIDTH = 50
 const EMOJI_SIZE = 30
 const BRIDE_EMOJI_SIZE = 50
 
-const START_DATE = new Date('2023-08-15')
+const START_DATE = new Date('2023-08-20')
 
 interface Emoji {
   id: number
@@ -165,7 +176,7 @@ export default function GamePage() {
               livesDelta += 1
               newFloatingTexts.push({
                 id: emoji.id,
-                text: '+❤️',
+                text: `+<img src="${HEART_EMOJI}" alt="heart" style="height: 1em; vertical-align: middle;" />`,
                 x: groomXRef.current + GROOM_WIDTH / 2,
                 y: GAME_HEIGHT - 70,
                 createdAt: timestamp,
@@ -174,7 +185,7 @@ export default function GamePage() {
               livesDelta -= 1
               newFloatingTexts.push({
                 id: emoji.id,
-                text: '💥',
+                text: `<img src="${BOMB_EMOJI}" alt="heart" style="height: 1.1em; vertical-align: middle;" />`,
                 x: groomXRef.current + GROOM_WIDTH / 2,
                 y: GAME_HEIGHT - 70,
                 createdAt: timestamp,
@@ -252,7 +263,10 @@ export default function GamePage() {
       case 'idle':
         return (
           <div className="game-intro">
-            <p>오늘은 수X밍의 첫 재회 날!</p>
+            <p>오늘은 2023년 8월 20일
+              <br />
+              수X밍의 첫 재회 날!
+            </p>
             <h2>결혼식 입장까지 D-{targetScore}</h2>
             <p>
               신부 민경 <img src={BRIDE_IMAGE} alt="신부" style={{ height: '1.5em', verticalAlign: 'bottom' }} />과 함께 결혼식장에 갈 수 있도록
@@ -260,26 +274,31 @@ export default function GamePage() {
               신랑 수철 <img src={GROOM_IMAGE} alt="신랑" style={{ height: '1.5em', verticalAlign: 'bottom' }} />을 도와주세요
             </p>
             <p>
-                <img src={stickerSuMing} alt="신랑-신부" style={{ height: '20em', }} />
+              <img src={stickerSuMing} alt="신랑-신부" style={{ height: '15em', }} />
             </p>
 
-             <div className="game-rules">
-                <span>게임 방법 <QuestionMarkCircledIcon /></span>
-                <div className="game-rules-tooltip">
-                  <h4 className="tooltip-title">게임 방법</h4>
-                  <p className="tooltip-description">하늘에서 떨어지는 신부, 천사 민경 <img src={BRIDE_IMAGE} alt="신부" style={{ height: '1.5em', verticalAlign: 'bottom' }} />을
-                      <br /> 바구니🧺로 받으면 점수를 얻어요.
-                      <br /> 획득한 점수만큼 결혼 날짜가 가까워져요!
-                      </p>
-                <br /> 
-                  <h4 className="tooltip-title">점수 획득 방법</h4>
-                  <p className="tooltip-item"><img src={BRIDE_IMAGE} alt="신부" />: 5~50점 랜덤 획득</p>
-                  <p className="tooltip-item"><span>{HEART_EMOJI}</span>: 목숨 +1</p>
-                  <p className="tooltip-item"><span>{OBSTACLE_EMOJIS.join(', ')}</span>: 목숨 -1</p>
-                </div>
+            <div className="game-rules">
+              <span>게임 방법 <QuestionMarkCircledIcon /></span>
+              <div className="game-rules-tooltip">
+                <h4 className="tooltip-title">게임 방법</h4>
+                <p className="tooltip-description">하늘에서 떨어지는 신부, 천사 민경 <img src={BRIDE_IMAGE} alt="신부" style={{ height: '1.5em', verticalAlign: 'bottom' }} />을
+                  <br /> 바구니<img src={BASKET_EMOJI} alt="바구니" style={{ height: '1em', }} />로 받으면 점수를 얻어요.
+                  <br /> 획득한 점수만큼 결혼 날짜가 가까워져요!
+                </p>
+                <br />
+                <h4 className="tooltip-title">점수 획득 방법</h4>
+                <p className="tooltip-item"><img src={BRIDE_IMAGE} alt="신부" />: 5~50점 랜덤 획득</p>
+                <p className="tooltip-item"><img src={HEART_EMOJI} alt="하트" style={{ height: '1.5em', verticalAlign: 'bottom' }} />: 목숨 +1</p>
+                <p className="tooltip-item">
+                  {OBSTACLE_EMOJIS.map((emoji, index) => (
+                    <img key={index} src={emoji} alt="obstacle" style={{ height: '1.5em', verticalAlign: 'bottom', marginRight: '4px' }} />
+                  ))}
+                  : 목숨 -1
+                </p>
               </div>
+            </div>
             <div>
-             
+
               <p></p>
               <button onClick={startGame} className="game-button">
                 게임 시작
@@ -293,10 +312,10 @@ export default function GamePage() {
       case 'won':
         return (
           <div className="game-over won">
-             <Confetti width={width} height={height} />
+            <Confetti width={width} height={height} />
             <h2>결혼 성공!</h2>
             <div className="animation-character">
-                <img src={happyWedding} alt="꺄축하해" style={{ height: '5em', }} />
+              <img src={happyWedding} alt="꺄축하해" style={{ height: '5em', }} />
             </div>
             <p>축하해주신 모든 분들께 감사드립니다. <br /> 덕분에 행복하게 잘 살겠습니다!</p>
             <button onClick={startGame} className="game-button">
@@ -314,9 +333,9 @@ export default function GamePage() {
             <h2>결혼 실패</h2>
             <p>최종 점수: {score}점</p>
             <div className="animation-character crying">
-                <img src={cryingSu} alt="울지마수철" style={{ height: '3em', }} />
+              <img src={cryingSu} alt="울지마수철" style={{ height: '3em', }} />
             </div>
-            <p>민경을 놓치다니 <br/> 다시 한번만 기회를 주세요!!</p>
+            <p>민경을 놓치다니 <br /> 다시 한번만 기회를 주세요!!</p>
             <button onClick={startGame} className="game-button">
               다시 도전
             </button>
@@ -330,10 +349,14 @@ export default function GamePage() {
           <>
             <div className="game-stats">
               <span>
-                목숨: {'❤️'.repeat(lives)}
-                {'🤍'.repeat(Math.max(0, 5 - lives))}
+                {Array.from({ length: lives }).map((_, i) => (
+                  <img key={`life-${i}`} src={HEART_EMOJI} alt="life" style={{ height: '1em', verticalAlign: 'middle', marginLeft: '2px' }} />
+                ))}
+                {Array.from({ length: 5 - lives }).map((_, i) => (
+                  <img key={`life-${i}`} src={LOST_HEART_EMOJI} alt="life" style={{ height: '1em', verticalAlign: 'middle', marginLeft: '2px' }} />
+                ))}
               </span>
-              <span>
+              <span style={{ color: '#e64980' }}>
                 결혼까지 D-{Math.max(0, targetScore - score)}
               </span>
             </div>
@@ -345,16 +368,16 @@ export default function GamePage() {
               style={{ width: GAME_WIDTH, height: GAME_HEIGHT }}
             >
               <div className="groom" style={{ left: groomXRef.current, width: GROOM_WIDTH }}>
-                <span className="groom-basket">{BASKET_EMOJI}</span>
+                <img className="groom-basket" src={BASKET_EMOJI} />
                 <img src={GROOM_IMAGE} alt="신랑" className="groom-char" />
               </div>
               {emojis.map((emoji) => {
                 const isBride = emoji.type === 'bride'
                 const size = isBride ? BRIDE_EMOJI_SIZE : EMOJI_SIZE
                 return (
-                  <div key={emoji.id} className="emoji" style={{ left: emoji.x, top: emoji.y, width: size, height: size }}>
-                    {isBride ? (
-                      <img src={emoji.char} alt="신부" style={{ width: '100%', height: '100%' }} />
+                  <div key={emoji.id} className="emoji" style={{ left: emoji.x, top: emoji.y, width: size, height: size, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                    {emoji.type === 'bride' || emoji.type === 'obstacle' || emoji.type === 'heart' ? (
+                      <img src={emoji.char} alt={emoji.type} style={{ width: '100%', height: '100%' }} />
                     ) : (
                       <span style={{ fontSize: size }}>{emoji.char}</span>
                     )}
@@ -364,13 +387,12 @@ export default function GamePage() {
               {floatingTexts.map((ft) => (
                 <div
                   key={ft.id}
-                  className="floating-text"
+                  className="floating-text" dangerouslySetInnerHTML={{ __html: ft.text }}
                   style={{
                     left: ft.x,
                     top: ft.y,
                   }}
                 >
-                  {ft.text}
                 </div>
               ))}
             </div>
