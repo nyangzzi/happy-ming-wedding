@@ -1,10 +1,13 @@
 /* === 공통 레이아웃 / 배경 === */
-html, body, #root {
+html,
+body,
+#root {
   margin: 0;
   padding: 0;
 }
 
-html, body {
+html,
+body {
   min-height: 100%;
 }
 
@@ -14,6 +17,8 @@ body {
   font-family: 'Gowun Dodum', sans-serif;
   display: flex;
   flex-direction: column;
+  overscroll-behavior-y: none;
+  /* 수직 스크롤 체이닝 방지 */
 }
 
 #root {
@@ -21,7 +26,8 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  min-height: 100vh; /* 최소 높이를 뷰포트 높이로 설정 */
+  min-height: 100vh;
+  /* 최소 높이를 뷰포트 높이로 설정 */
 }
 
 /* 페이지 기본 중앙 정렬 */
