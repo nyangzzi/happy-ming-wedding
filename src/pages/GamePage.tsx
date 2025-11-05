@@ -263,7 +263,7 @@ export default function GamePage() {
               신랑 수철 <img src={GROOM_IMAGE} alt="신랑" style={{ height: '1.5em', verticalAlign: 'bottom' }} />을 도와주세요
             </p>
             <p>
-              <img src={stickerSuMing} alt="신랑-신부" style={{ height: '20em', }} />
+              <img src={stickerSuMing} alt="신랑-신부" style={{ height: '15em', }} />
             </p>
 
             <div className="game-rules">

@@ -10,17 +10,18 @@
   align-items: center;
   justify-content: center;
   width: 100%;
-  overflow: hidden; /* 스크롤 방지 */
 }
 
 .game-intro {
   max-width: 375px;
-  margin: 0 auto;
-  padding: 20px;
+  /* 그림자가 표시될 공간을 확보하기 위해 margin 추가 */
+  margin: 20px auto;
+  padding: 20px 40px;
   background: rgba(255, 255, 255, 0.7);
   border-radius: 15px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-  overflow: visible; /* 툴팁이 잘리지 않도록 수정 */
+  overflow: visible;
+  /* 툴팁이 잘리지 않도록 수정 */
 }
 
 .game-rules {
@@ -32,7 +33,7 @@
   font-weight: bold;
 }
 
-.game-rules > span {
+.game-rules>span {
   display: inline-flex;
   align-items: center;
   gap: 4px;
@@ -49,11 +50,12 @@
   gap: 4px;
   border-radius: 6px;
   padding: 15px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); /* 그림자 추가 */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  /* 그림자 추가 */
   position: absolute;
   z-index: 1;
   bottom: 125%;
-  left: 50%;  
+  left: 50%;
   margin-left: -140px;
   opacity: 0;
   transition: opacity 0.3s;
@@ -64,17 +66,26 @@
   opacity: 1;
 }
 
-.game-rules-tooltip img, .game-rules-tooltip span { vertical-align: middle; height: 1.5em; margin-right: 8px; }
-.game-rules-tooltip > * {
+.game-rules-tooltip img,
+.game-rules-tooltip span {
+  vertical-align: middle;
+  height: 1.5em;
+  margin-right: 8px;
+}
+
+.game-rules-tooltip>* {
   margin: 0;
 }
+
 .game-rules-tooltip .tooltip-title {
   font-weight: bold;
   color: #d6336c;
 }
+
 .game-rules-tooltip .tooltip-description {
- font-weight: normal;
+  font-weight: normal;
 }
+
 .game-rules-tooltip .tooltip-item {
   font-weight: normal;
 }
@@ -82,6 +93,7 @@
 .game-intro h2 {
   color: #d6336c;
 }
+
 .game-button {
   background-color: #ff87ab;
   color: white;
@@ -142,7 +154,7 @@
   font-size: 40px;
 }
 
-.groom-char {  
+.groom-char {
   margin-top: -15px;
   width: 50px;
   height: 50px;
@@ -168,6 +180,7 @@
     opacity: 1;
     transform: translate(-50%, 0);
   }
+
   to {
     opacity: 0;
     transform: translate(-50%, -50px);
@@ -175,7 +188,7 @@
 }
 
 .game-over {
-  padding: 40px 20px;
+  padding: 40px 60px;
   border-radius: 15px;
   background: rgba(255, 255, 255, 0.8);
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
@@ -216,15 +229,38 @@
 }
 
 @keyframes shake {
-  0%, 100% { transform: translateX(0); }
-  25% { transform: translateX(-5px) rotate(-5deg); }
-  75% { transform: translateX(5px) rotate(5deg); }
+
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+
+  25% {
+    transform: translateX(-5px) rotate(-5deg);
+  }
+
+  75% {
+    transform: translateX(5px) rotate(5deg);
+  }
 }
 
 @keyframes bounce {
-  0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
-  40% { transform: translateY(-30px); }
-  60% { transform: translateY(-15px); }
+
+  0%,
+  20%,
+  50%,
+  80%,
+  100% {
+    transform: translateY(0);
+  }
+
+  40% {
+    transform: translateY(-30px);
+  }
+
+  60% {
+    transform: translateY(-15px);
+  }
 }
 
 /* Confetti animation for win state */
@@ -243,5 +279,7 @@
 }
 
 @keyframes fall {
-  to { background-position: 0 300px; }
+  to {
+    background-position: 0 300px;
+  }
 }
