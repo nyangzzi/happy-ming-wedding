@@ -42,8 +42,6 @@ export default function HomePage() {
         <span>.</span>
         <span>.</span>
         <span>.</span>
-        <span>.</span>
-        <span>.</span>
       </div>
 
       <div>
@@ -143,7 +141,7 @@ export default function HomePage() {
       </div>
 
       <div>
-        여기에 넣고 싶은 말 있어여?!?!!!
+        예비부부가 이곳에서 기다리고 있습니다
         <img src={mapImg} alt='약도' loading='lazy' />
       </div>
 

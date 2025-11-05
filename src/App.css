@@ -8,6 +8,9 @@ body,
 
 html,
 body {
+  overscroll-behavior-y: none;
+  /* 수직 스크롤 체이닝(바운스) 방지 */
+  max-height: 100%;
   min-height: 100%;
 }
 
@@ -17,8 +20,7 @@ body {
   font-family: 'Gowun Dodum', sans-serif;
   display: flex;
   flex-direction: column;
-  overscroll-behavior-y: none;
-  /* 수직 스크롤 체이닝 방지 */
+  color: #213547;
 }
 
 #root {

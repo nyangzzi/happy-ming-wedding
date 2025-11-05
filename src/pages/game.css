@@ -14,8 +14,7 @@
 
 .game-intro {
   max-width: 375px;
-  /* 그림자가 표시될 공간을 확보하기 위해 margin 추가 */
-  margin: 20px auto;
+  margin: 0 auto;
   padding: 20px 40px;
   background: rgba(255, 255, 255, 0.7);
   border-radius: 15px;
@@ -151,11 +150,17 @@
 }
 
 .groom-basket {
-  font-size: 40px;
+  width: 50px;
+  /* 이미지 너비 설정 */
+  height: auto;
+  /* 이미지 비율에 맞춰 높이 자동 조절 */
+  z-index: 1;
+  /* 신랑 캐릭터보다 앞에 보이도록 z-index 설정 */
 }
 
 .groom-char {
-  margin-top: -15px;
+  margin-top: -10px;
+  /* 바구니와 자연스럽게 겹치도록 margin-top 조정 */
   width: 50px;
   height: 50px;
 }
@@ -194,6 +199,7 @@
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
   max-width: 375px;
   margin: 0 auto;
+  /* 불필요한 스크롤을 유발할 수 있어 0으로 유지 */
 }
 
 .game-over h2 {
