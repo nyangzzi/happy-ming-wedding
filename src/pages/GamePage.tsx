@@ -23,7 +23,7 @@ const GROOM_WIDTH = 50
 const EMOJI_SIZE = 30
 const BRIDE_EMOJI_SIZE = 50
 
-const START_DATE = new Date('2023-08-15')
+const START_DATE = new Date('2023-08-20')
 
 interface Emoji {
   id: number
@@ -260,26 +260,26 @@ export default function GamePage() {
               신랑 수철 <img src={GROOM_IMAGE} alt="신랑" style={{ height: '1.5em', verticalAlign: 'bottom' }} />을 도와주세요
             </p>
             <p>
-                <img src={stickerSuMing} alt="신랑-신부" style={{ height: '20em', }} />
+              <img src={stickerSuMing} alt="신랑-신부" style={{ height: '20em', }} />
             </p>
 
-             <div className="game-rules">
-                <span>게임 방법 <QuestionMarkCircledIcon /></span>
-                <div className="game-rules-tooltip">
-                  <h4 className="tooltip-title">게임 방법</h4>
-                  <p className="tooltip-description">하늘에서 떨어지는 신부, 천사 민경 <img src={BRIDE_IMAGE} alt="신부" style={{ height: '1.5em', verticalAlign: 'bottom' }} />을
-                      <br /> 바구니🧺로 받으면 점수를 얻어요.
-                      <br /> 획득한 점수만큼 결혼 날짜가 가까워져요!
-                      </p>
-                <br /> 
-                  <h4 className="tooltip-title">점수 획득 방법</h4>
-                  <p className="tooltip-item"><img src={BRIDE_IMAGE} alt="신부" />: 5~50점 랜덤 획득</p>
-                  <p className="tooltip-item"><span>{HEART_EMOJI}</span>: 목숨 +1</p>
-                  <p className="tooltip-item"><span>{OBSTACLE_EMOJIS.join(', ')}</span>: 목숨 -1</p>
-                </div>
+            <div className="game-rules">
+              <span>게임 방법 <QuestionMarkCircledIcon /></span>
+              <div className="game-rules-tooltip">
+                <h4 className="tooltip-title">게임 방법</h4>
+                <p className="tooltip-description">하늘에서 떨어지는 신부, 천사 민경 <img src={BRIDE_IMAGE} alt="신부" style={{ height: '1.5em', verticalAlign: 'bottom' }} />을
+                  <br /> 바구니🧺로 받으면 점수를 얻어요.
+                  <br /> 획득한 점수만큼 결혼 날짜가 가까워져요!
+                </p>
+                <br />
+                <h4 className="tooltip-title">점수 획득 방법</h4>
+                <p className="tooltip-item"><img src={BRIDE_IMAGE} alt="신부" />: 5~50점 랜덤 획득</p>
+                <p className="tooltip-item"><span>{HEART_EMOJI}</span>: 목숨 +1</p>
+                <p className="tooltip-item"><span>{OBSTACLE_EMOJIS.join(', ')}</span>: 목숨 -1</p>
               </div>
+            </div>
             <div>
-             
+
               <p></p>
               <button onClick={startGame} className="game-button">
                 게임 시작
@@ -293,10 +293,10 @@ export default function GamePage() {
       case 'won':
         return (
           <div className="game-over won">
-             <Confetti width={width} height={height} />
+            <Confetti width={width} height={height} />
             <h2>결혼 성공!</h2>
             <div className="animation-character">
-                <img src={happyWedding} alt="꺄축하해" style={{ height: '5em', }} />
+              <img src={happyWedding} alt="꺄축하해" style={{ height: '5em', }} />
             </div>
             <p>축하해주신 모든 분들께 감사드립니다. <br /> 덕분에 행복하게 잘 살겠습니다!</p>
             <button onClick={startGame} className="game-button">
@@ -314,9 +314,9 @@ export default function GamePage() {
             <h2>결혼 실패</h2>
             <p>최종 점수: {score}점</p>
             <div className="animation-character crying">
-                <img src={cryingSu} alt="울지마수철" style={{ height: '3em', }} />
+              <img src={cryingSu} alt="울지마수철" style={{ height: '3em', }} />
             </div>
-            <p>민경을 놓치다니 <br/> 다시 한번만 기회를 주세요!!</p>
+            <p>민경을 놓치다니 <br /> 다시 한번만 기회를 주세요!!</p>
             <button onClick={startGame} className="game-button">
               다시 도전
             </button>
