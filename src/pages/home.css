@@ -13,6 +13,11 @@
   margin: 0 auto; /* PC 화면에서 중앙 정렬 */
   overflow-y: auto; /* 내용이 길어지면 스크롤 */
 }
+.page--home img {
+  width: 100%;
+  height: auto;
+}
+
 .title { margin: 0 0 8px; color: #c27b7f; font-size: 2rem; }
 .sub { color: #555; margin-bottom: 24px; }
 .cta button {
