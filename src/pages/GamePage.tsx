@@ -148,7 +148,8 @@ export default function GamePage() {
           const newY = emoji.y + emoji.speed
           // Collision detection
           const currentEmojiSize = emoji.type === 'bride' ? BRIDE_EMOJI_SIZE : EMOJI_SIZE
-          const groomRect = { x: groomXRef.current, y: GAME_HEIGHT - 50, width: GROOM_WIDTH, height: 30 }
+          const gameAreaHeight = gameAreaRef.current?.clientHeight || GAME_HEIGHT
+          const groomRect = { x: groomXRef.current, y: gameAreaHeight - 50, width: GROOM_WIDTH, height: 30 }
           const emojiRect = { x: emoji.x, y: newY, width: currentEmojiSize, height: currentEmojiSize }
 
           if (
@@ -169,7 +170,7 @@ export default function GamePage() {
                 id: emoji.id,
                 text: `+${points}`,
                 x: groomXRef.current + GROOM_WIDTH / 2,
-                y: GAME_HEIGHT - 70,
+                y: GAME_HEIGHT - 110,
                 createdAt: timestamp,
               })
             } else if (emoji.type === 'heart') {
@@ -178,7 +179,7 @@ export default function GamePage() {
                 id: emoji.id,
                 text: `+<img src="${HEART_EMOJI}" alt="heart" style="height: 1em; vertical-align: middle;" />`,
                 x: groomXRef.current + GROOM_WIDTH / 2,
-                y: GAME_HEIGHT - 70,
+                y: GAME_HEIGHT - 110,
                 createdAt: timestamp,
               })
             } else {
@@ -187,7 +188,7 @@ export default function GamePage() {
                 id: emoji.id,
                 text: `<img src="${BOMB_EMOJI}" alt="heart" style="height: 1.1em; vertical-align: middle;" />`,
                 x: groomXRef.current + GROOM_WIDTH / 2,
-                y: GAME_HEIGHT - 70,
+                y: GAME_HEIGHT - 110,
                 createdAt: timestamp,
               })
             }
@@ -274,7 +275,7 @@ export default function GamePage() {
               신랑 수철 <img src={GROOM_IMAGE} alt="신랑" style={{ height: '1.5em', verticalAlign: 'bottom' }} />을 도와주세요
             </p>
             <p>
-              <img src={stickerSuMing} alt="신랑-신부" style={{ height: '15em', }} />
+              <img src={stickerSuMing} alt="신랑-신부" style={{ height: '10em', }} />
             </p>
 
             <div className="game-rules">
@@ -346,57 +347,59 @@ export default function GamePage() {
         )
       case 'playing':
         return (
-          <>
-            <div className="game-stats">
-              <span>
-                {Array.from({ length: lives }).map((_, i) => (
-                  <img key={`life-${i}`} src={HEART_EMOJI} alt="life" style={{ height: '1em', verticalAlign: 'middle', marginLeft: '2px' }} />
-                ))}
-                {Array.from({ length: 5 - lives }).map((_, i) => (
-                  <img key={`life-${i}`} src={LOST_HEART_EMOJI} alt="life" style={{ height: '1em', verticalAlign: 'middle', marginLeft: '2px' }} />
-                ))}
-              </span>
-              <span style={{ color: '#e64980' }}>
-                결혼까지 D-{Math.max(0, targetScore - score)}
-              </span>
-            </div>
-            <div
-              className="game-area"
-              ref={gameAreaRef}
-              onMouseMove={handleMouseMove}
-              onTouchMove={handleTouchMove}
-              style={{ width: GAME_WIDTH, height: GAME_HEIGHT }}
-            >
-              <div className="groom" style={{ left: groomXRef.current, width: GROOM_WIDTH }}>
-                <img className="groom-basket" src={BASKET_EMOJI} />
-                <img src={GROOM_IMAGE} alt="신랑" className="groom-char" />
+          <div className="game-container">
+            <>
+              <div className="game-stats">
+                <span>
+                  {Array.from({ length: lives }).map((_, i) => (
+                    <img key={`life-${i}`} src={HEART_EMOJI} alt="life" style={{ height: '1em', verticalAlign: 'middle', marginLeft: '2px' }} />
+                  ))}
+                  {Array.from({ length: 5 - lives }).map((_, i) => (
+                    <img key={`life-${i}`} src={LOST_HEART_EMOJI} alt="life" style={{ height: '1em', verticalAlign: 'middle', marginLeft: '2px' }} />
+                  ))}
+                </span>
+                <span style={{ color: '#e64980' }}>
+                  결혼까지 D-{Math.max(0, targetScore - score)}
+                </span>
               </div>
-              {emojis.map((emoji) => {
-                const isBride = emoji.type === 'bride'
-                const size = isBride ? BRIDE_EMOJI_SIZE : EMOJI_SIZE
-                return (
-                  <div key={emoji.id} className="emoji" style={{ left: emoji.x, top: emoji.y, width: size, height: size, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                    {emoji.type === 'bride' || emoji.type === 'obstacle' || emoji.type === 'heart' ? (
-                      <img src={emoji.char} alt={emoji.type} style={{ width: '100%', height: '100%' }} />
-                    ) : (
-                      <span style={{ fontSize: size }}>{emoji.char}</span>
-                    )}
-                  </div>
-                )
-              })}
-              {floatingTexts.map((ft) => (
-                <div
-                  key={ft.id}
-                  className="floating-text" dangerouslySetInnerHTML={{ __html: ft.text }}
-                  style={{
-                    left: ft.x,
-                    top: ft.y,
-                  }}
-                >
+              <div
+                className="game-area"
+                ref={gameAreaRef}
+                onMouseMove={handleMouseMove}
+                onTouchMove={handleTouchMove}
+                style={{ width: GAME_WIDTH, height: GAME_HEIGHT }}
+              >
+                <div className="groom" style={{ left: groomXRef.current, width: GROOM_WIDTH }}>
+                  <img className="groom-basket" src={BASKET_EMOJI} />
+                  <img src={GROOM_IMAGE} alt="신랑" className="groom-char" />
                 </div>
-              ))}
-            </div>
-          </>
+                {emojis.map((emoji) => {
+                  const isBride = emoji.type === 'bride'
+                  const size = isBride ? BRIDE_EMOJI_SIZE : EMOJI_SIZE
+                  return (
+                    <div key={emoji.id} className="emoji" style={{ left: emoji.x, top: emoji.y, width: size, height: size, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                      {emoji.type === 'bride' || emoji.type === 'obstacle' || emoji.type === 'heart' ? (
+                        <img src={emoji.char} alt={emoji.type} style={{ width: '100%', height: '100%' }} />
+                      ) : (
+                        <span style={{ fontSize: size }}>{emoji.char}</span>
+                      )}
+                    </div>
+                  )
+                })}
+                {floatingTexts.map((ft) => (
+                  <div
+                    key={ft.id}
+                    className="floating-text" dangerouslySetInnerHTML={{ __html: ft.text }}
+                    style={{
+                      left: ft.x,
+                      top: ft.y,
+                    }}
+                  >
+                  </div>
+                ))}
+              </div>
+            </>
+          </div>
         )
     }
   }
