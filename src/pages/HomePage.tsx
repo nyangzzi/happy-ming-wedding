@@ -84,17 +84,19 @@ export default function HomePage() {
       <div>
         <img src={selectedXImg} alt='선택~' loading='lazy' style={{ width: '60%' }} />
         <img src={waitingImg} alt='기다려' loading='lazy' />
-        6년만의 재회❤️‍🩹
+        너가 자기야 미안해 했잖아?
+        <br />
+        환승연애 이딴 거 안 나왔어
       </div>
 
       <div>
         <img src={dontCryingImg} alt='울지마~~' loading='lazy' />
-        그동안 민경의 소식을 기다려 온 수철💌
+        ???: 야!!! 괜찮아요?
       </div>
 
       <div>
         <img src={cuteMingImg} alt='부끄밍' loading='lazy' />
-        아무렇지 않을 줄 알았는데...🤭
+        내일 봬요. 오빠
       </div>
 
       <div>
@@ -145,7 +147,8 @@ export default function HomePage() {
         <img src={mapImg} alt='약도' loading='lazy' />
       </div>
 
-      <div className="cta">
+      <div className="cta" style={{ gap: '10px' }}>
+        <div className="cta-tooltip">신랑 수철을 도와 신부 민경과 함께 결혼식장 가기</div>
         <button onClick={() => nav('/game')}>게임 시작</button>
       </div>
 

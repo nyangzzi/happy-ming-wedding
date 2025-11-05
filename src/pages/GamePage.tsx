@@ -252,7 +252,10 @@ export default function GamePage() {
       case 'idle':
         return (
           <div className="game-intro">
-            <p>오늘은 수X밍의 첫 재회 날!</p>
+            <p>오늘은 2023년 8월 20일
+              <br />
+              수X밍의 첫 재회 날!
+            </p>
             <h2>결혼식 입장까지 D-{targetScore}</h2>
             <p>
               신부 민경 <img src={BRIDE_IMAGE} alt="신부" style={{ height: '1.5em', verticalAlign: 'bottom' }} />과 함께 결혼식장에 갈 수 있도록
