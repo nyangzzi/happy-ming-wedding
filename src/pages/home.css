@@ -118,3 +118,35 @@
     transform: scale(1);
   }
 }
+
+.toast-message {
+  position: fixed;
+  bottom: 80px;
+  min-width: 300px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgba(155, 155, 155, 0.7);
+  color: white;
+  padding: 13px 20px;
+  border-radius: 16px;
+  z-index: 1000;
+  animation: fadeInOut 2s forwards;
+}
+
+@keyframes fadeInOut {
+  0% {
+    opacity: 0;
+  }
+
+  10% {
+    opacity: 1;
+  }
+
+  90% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}

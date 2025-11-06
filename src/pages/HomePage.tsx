@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import './home.css'
 import kakaotalkImg from '../assets/kakaotalk.png'
@@ -21,9 +22,26 @@ import nowSuMingImg from '../assets/now-su-ming.png'
 import weddingPosterImg from '../assets/wedding-poster.png'
 import mapImg from '../assets/map.png'
 
+import { CheckCircledIcon, CopyIcon } from '@radix-ui/react-icons'
+
 
 export default function HomePage() {
   const nav = useNavigate()
+  const [showToast, setShowToast] = useState(false)
+
+  const handleCopy = () => {
+    const textToCopy = '국민은행(박민경) 49030204000087'
+    navigator.clipboard.writeText(textToCopy).then(() => {
+      setShowToast(true)
+      setTimeout(() => {
+        setShowToast(false)
+      }, 2000)
+    }).catch(err => {
+      console.error('클립보드 복사 실패:', err)
+      alert('복사에 실패했습니다.')
+    })
+  }
+
   return (
     <div className="page page--home">
       <div style={{ height: 100 }} />
@@ -146,7 +164,32 @@ export default function HomePage() {
       </div>
 
       <div>
-        💓 행복한 예비부부의 앞 날에 많은 축복 부탁드립니다 💓
+        💓 행복한 예비부부의 앞날에 많은 축복 부탁드립니다 💓
+      </div>
+
+      <div style={{ width: '100px', height: '1px', border: '1px solid #ccc' }} />
+
+      <div>
+        💌 마음 전하실 곳 💌
+        <br />
+        <div
+          onClick={handleCopy}
+          style={{
+            display: 'flex',
+            flexDirection: 'row',
+            gap: '10px',
+            justifyContent: 'center',
+            alignItems: 'center',
+            cursor: 'pointer',
+            backgroundColor: 'rgba(0, 0, 0, 0.1)',
+            padding: '10px 15px',
+            borderRadius: '8px',
+            color: '#f0f0f0',
+          }}
+        >
+          국민은행(박민경) 49030204000087
+          <CopyIcon />
+        </div>
       </div>
 
       <div className="cta" style={{ gap: '10px' }}>
@@ -155,6 +198,15 @@ export default function HomePage() {
       </div>
 
       <div style={{ height: 100 }} />
+
+      {showToast && (
+        <div className="toast-message">
+          <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+            <CheckCircledIcon style={{ width: '22px', height: '22px', borderRadius: '100%', background: '#28a7466b' }} />
+            복사 완료!
+          </div>
+        </div>
+      )}
 
     </div>
   )
