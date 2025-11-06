@@ -167,7 +167,7 @@ export default function HomePage() {
         💓 행복한 예비부부의 앞날에 많은 축복 부탁드립니다 💓
       </div>
 
-      <div style={{ width: '100px', height: '1px', border: '1px solid #ccc' }} />
+      <div style={{ width: '100px', height: '0px', border: '1px solid #ccc' }} />
 
       <div>
         💌 마음 전하실 곳 💌
@@ -181,16 +181,20 @@ export default function HomePage() {
             justifyContent: 'center',
             alignItems: 'center',
             cursor: 'pointer',
-            backgroundColor: 'rgba(0, 0, 0, 0.1)',
+            backgroundColor: '#ffffff89',
             padding: '10px 15px',
-            borderRadius: '8px',
-            color: '#f0f0f0',
+            borderRadius: '16px',
+            color: '#ff87ab',
+            boxShadow: '0 4px 15px rgba(0, 0, 0, 0.1)'
           }}
         >
           국민은행(박민경) 49030204000087
           <CopyIcon />
         </div>
       </div>
+
+      <div style={{ width: '100px', height: '0px', border: '1px solid #ccc' }} />
+
 
       <div className="cta" style={{ gap: '10px' }}>
         <div className="cta-tooltip">신랑 수철을 도와 신부 민경과 함께 결혼식장 가기</div>
